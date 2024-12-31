@@ -1,49 +1,44 @@
-﻿namespace LGSTrayHID;
-
-public readonly struct Hidpp20
+namespace LGSTrayHID
 {
-    private readonly byte[] _data;
-
-    public Hidpp20(byte[] data)
+    public class Hidpp20
     {
-        this._data = data;
+        private readonly byte[] _buffer;
+
+        public Hidpp20(byte[] buffer)
+        {
+            _buffer = buffer;
+        }
+
+        public int Length => _buffer.Length;
+
+        public byte GetFeatureIndex()
+        {
+            return _buffer[2];
+        }
+
+        public byte GetSoftwareId()
+        {
+            return (byte)(_buffer[3] & 0x0F);
+        }
+
+        public Span<byte> GetParams()
+        {
+            return _buffer.AsSpan(4);
+        }
+
+        public byte GetParam(int paramIdx)
+        {
+            return _buffer[4 + paramIdx];
+        }
+
+        public static implicit operator byte[](Hidpp20 hidpp20)
+        {
+            return hidpp20._buffer;
+        }
+
+        public static implicit operator Hidpp20(byte[] buffer)
+        {
+            return new Hidpp20(buffer);
+        }
     }
-
-    public static explicit operator byte[](Hidpp20 msg) => msg._data;
-
-    public static implicit operator Hidpp20(byte[] data) => new(data);
-
-    public byte this[int index] => _data[index];
-
-    public int Length => _data.Length;
-
-    public byte GetDeviceIdx()
-    {
-        return _data[1];
-    }
-
-    public byte GetFeatureIndex()
-    {
-        return _data[2];
-    }
-
-    public byte GetFunctionId()
-    {
-        return (byte)((_data[3] & 0xF0) >> 4);
-    }
-
-    public byte GetSoftwareId()
-    {
-        return (byte)(_data[3] & 0x0F);
-    }
-
-    public Span<byte> GetParams()
-    {
-        return _data.AsSpan(4);
-    }
-
-    public byte GetParam(int paramIdx)
-    {
-        return _data[4 + paramIdx];
-    }
-}
+} 
