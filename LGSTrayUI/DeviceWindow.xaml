@@ -1,0 +1,26 @@
+<Window x:Class="LGSTrayUI.DeviceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Device Status" Height="300" Width="200">
+    <Grid>
+        <StackPanel Margin="10">
+            <TextBlock Text="{Binding DeviceName}" FontWeight="Bold" Margin="0,0,0,10"/>
+            <TextBlock>
+                <Run Text="Battery: "/>
+                <Run Text="{Binding BatteryPercentage, StringFormat='{}{0:F1}%'}"/>
+            </TextBlock>
+            <TextBlock>
+                <Run Text="Voltage: "/>
+                <Run Text="{Binding BatteryVoltage, StringFormat='{}{0:F2}V'}"/>
+            </TextBlock>
+            <TextBlock>
+                <Run Text="Status: "/>
+                <Run Text="{Binding PowerSupplyStatus}"/>
+            </TextBlock>
+            <TextBlock>
+                <Run Text="Last Update: "/>
+                <Run Text="{Binding LastUpdate, StringFormat='{}{0:HH:mm:ss}'}"/>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</Window> 

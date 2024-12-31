@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <VersionPrefix>3.0.3</VersionPrefix>
+    <AssemblyName>LGSTray</AssemblyName>
+    <ApplicationIcon>Resources\logo_black.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\*.ico" />
+    <Resource Include="Resources\*.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LGSTrayCore\LGSTrayCore.csproj" />
+    <ProjectReference Include="..\LGSTrayHID\LGSTrayHID.csproj" />
+    <ProjectReference Include="..\LGSTrayPrimitives\LGSTrayPrimitives.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="hidapi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
