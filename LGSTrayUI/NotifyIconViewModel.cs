@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using LGSTrayPrimitives;
 using System.Drawing;
 using Application = System.Windows.Application;
+using Microsoft.Extensions.Configuration;
 
 namespace LGSTrayUI;
 
@@ -45,6 +46,8 @@ public partial class NotifyIconViewModel : ObservableObject, IDisposable
 
     private bool _disposed;
 
+    private readonly UserSettingsWrapper _userSettings;
+
     [RelayCommand]
     private void ShowWindow()
     {
@@ -65,8 +68,9 @@ public partial class NotifyIconViewModel : ObservableObject, IDisposable
         Application.Current.Shutdown();
     }
 
-    public NotifyIconViewModel()
+    public NotifyIconViewModel(IConfiguration configuration)
     {
+        _userSettings = new UserSettingsWrapper(configuration);
         Console.WriteLine("Initializing NotifyIconViewModel");
         _notifyIcon = new NotifyIcon
         {

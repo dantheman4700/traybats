@@ -1,21 +1,29 @@
-﻿using System.Windows;
+﻿using Microsoft.Extensions.Configuration;
+using System.Windows;
+using Tomlyn.Extensions.Configuration;
 
-namespace LGSTrayUI
+namespace LGSTrayUI;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    private NotifyIconViewModel? _notifyIcon;
+    private IConfiguration? _configuration;
+
+    protected override void OnStartup(StartupEventArgs e)
     {
-        private NotifyIconViewModel? _notifyIconViewModel;
+        base.OnStartup(e);
 
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
-            _notifyIconViewModel = new NotifyIconViewModel();
-        }
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddTomlFile("appsettings.toml", optional: false, reloadOnChange: true);
 
-        protected override void OnExit(ExitEventArgs e)
-        {
-            _notifyIconViewModel?.Dispose();
-            base.OnExit(e);
-        }
+        _configuration = builder.Build();
+        _notifyIcon = new NotifyIconViewModel(_configuration);
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        _notifyIcon?.Dispose();
+        base.OnExit(e);
     }
 }
